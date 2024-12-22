@@ -34,7 +34,7 @@ export default function BurgerIngredients({ingredients}) {
         setStateIngredients(separateState)
     }, [ingredients])
 
-    return <div className='custom-scroll'>
+    return <div className={`custom-scroll ${styles.inner}`}>
         {TYPE_INGREDIENT.map((sectionParams => {
             return <section key={`section-${sectionParams.param}`}>
                 <h2 className={styles[sectionParams.param]}>{

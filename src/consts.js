@@ -1,3 +1,10 @@
+export const DATA_URL = "https://norma.nomoreparties.space/api/ingredients"
+export const TABS = [
+  { label: 'Булки', value: 'bread'},
+  { label: 'Соусы', value: 'sauce'},
+  { label: 'Начинки', value: 'filling'},
+]
+
 export const TYPE_INGREDIENT = [
     {title: "Булки", param: "bun"},
     {title: "Соусы", param: "sauce"},
