@@ -1,0 +1,20 @@
+.subtitle {
+    font-size: 24px;
+    margin: 16px auto 32px
+}
+
+.inner {
+    text-align: center;
+}
+
+.details {
+    display: flex;
+}
+
+.details li {
+    width: 25%
+}
+
+.details li span {
+    display: block;
+}
