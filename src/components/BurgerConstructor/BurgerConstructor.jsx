@@ -11,10 +11,11 @@ const ingredientPropType = PropTypes.shape({
   });
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+    onHandleOrder: PropTypes.func
 }
 
-export default function BurgerConstructor ({ingredients}) {
+export default function BurgerConstructor ({ingredients, onHandleOrder}) {
     const [baseIngredient, ...innerIngredents] = ingredients
 
     if (ingredients.length === 0) return null
@@ -60,7 +61,7 @@ export default function BurgerConstructor ({ingredients}) {
                 <p className="text text_type_digits-medium">451</p>
                 <CurrencyIcon type="primary" />
             </div>
-            <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
+            <Button htmlType="button" type="primary" size="medium" onClick={onHandleOrder}>Оформить заказ</Button>
         </footer>
       </div>
 }

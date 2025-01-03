@@ -20,10 +20,11 @@ const ingredientFullInfoPropType = PropTypes.shape({
   });
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientFullInfoPropType).isRequired
+    ingredients: PropTypes.arrayOf(ingredientFullInfoPropType).isRequired,
+    onHandleClick: PropTypes.func
 }
 
-export default function BurgerIngredients({ingredients}) {
+export default function BurgerIngredients({ingredients, onHandleClick}) {
     const [stateIngredients, setStateIngredients] = useState({})
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function BurgerIngredients({ingredients}) {
 
                 <div className={styles.list}>
                     {stateIngredients[sectionParams.param]?.map(ingredient => {
-                        return <div key={ingredient._id} className={styles.detail}>
+                        return <div key={ingredient._id} className={styles.detail} onClick={() => onHandleClick(ingredient._id)}>
                             {ingredient._id === TEMP_ID && <Counter count={BREAT_COUNT} size="default" extraClass="m-1" />}
 
                             <img src={ingredient.image} alt=""/>
