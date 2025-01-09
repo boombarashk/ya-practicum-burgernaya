@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.container .section {
+    display: flex;
+    align-items: center;
+}
+.container .section .icon {
+    width: 40px;
+}
+.container .section .icon:not(.empty) {
+    cursor: pointer;
+}
+.container .inner {
+    overflow-y: auto;
+    height: calc(100vh - 480px);
+}
+.container .inner .section + .section {
+    margin-top: 16px;
+}
+
+.footer {
+    height: 64px;
+    display: flex;
+    justify-content: end;
+}
+
+.footer .info {
+    display: flex;
+    gap:8px;
+    align-items: center;
+    padding-right: 40px;
+}
