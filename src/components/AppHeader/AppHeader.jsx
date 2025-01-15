@@ -1,10 +1,10 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import './AppHeader.css';
+import styles from './AppHeader.module.css';
 
 export default function AppHeader() {
-    return <>
-    <div className="header-container">
-        <nav>
+    return (<header>
+    <div className={styles.header_container}>
+        <nav className={styles.nav}>
             <ul>
                 <li key={'base-page'} className="active">
                     <BurgerIcon />
@@ -17,12 +17,12 @@ export default function AppHeader() {
             </ul>
         </nav>
 
-        <div className="header-logo"><Logo /></div>
+        <div className={styles.header_logo}><Logo /></div>
 
-        <div className="header-auth-link">
+        <div className={styles.header_auth_link}>
             <ProfileIcon />
             Личный кабинет
         </div>
     </div>
-    </>
+    </header>)
 }

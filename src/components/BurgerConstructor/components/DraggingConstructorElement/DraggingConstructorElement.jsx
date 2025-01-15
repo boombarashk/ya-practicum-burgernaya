@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types'
+import { ingredientPropType } from './../../../../utils/types'
+
 import { useRef } from "react"
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd'
@@ -6,13 +8,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { sortIngredients, deleteIngredient } from '../../../../services/reducers/burgerConstructor'
 import styles from '../../BurgerConstructor.module.css'
 
-const ingredientPropType = PropTypes.shape({
-    "_id": PropTypes.string.isRequired,
-    id: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  });
+
 
 DraggingConstructorElement.propTypes = {
     ingredient: ingredientPropType.isRequired,
@@ -64,7 +60,7 @@ export default function DraggingConstructorElement({ingredient, index}) {
 
     const opacity = isDragging ? 0 : 1
 
-    return <section ref={ingredientRef} className={styles.section} style={{opacity}}>
+    return (<section ref={ingredientRef} className={styles.section} style={{opacity}}>
         <span className={styles.icon}><DragIcon/></span>
         
         <ConstructorElement
@@ -79,5 +75,5 @@ export default function DraggingConstructorElement({ingredient, index}) {
                 }))
             }}
         />
-    </section>
+    </section>)
 }

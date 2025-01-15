@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import cryptoRandomString from 'crypto-random-string'
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -28,7 +27,7 @@ export default function BurgerConstructor ({onHandleOrder}) {
         })
     })
     
-    return <div ref={dropRef} className={styles.container}>
+    return (<div ref={dropRef} className={styles.container}>
         {baseIngredient && <section className={styles.section}>
             <span className={`empty ${styles.icon}`}></span>
         <ConstructorElement
@@ -43,7 +42,7 @@ export default function BurgerConstructor ({onHandleOrder}) {
         {burgerConstructorData.length > 0 && <div className={`custom-scroll ${styles.inner}`}>
         {burgerConstructorData.map((ingredient, index) =>
             <DraggingConstructorElement 
-                key={cryptoRandomString({length: 10})}
+                key={`dragging-${ingredient._id}`}
                 ingredient={ingredient}
                 index={index}
             />
@@ -72,5 +71,5 @@ export default function BurgerConstructor ({onHandleOrder}) {
         {!baseIngredient && burgerConstructorData.length === 0 && (
             <div className={`text text_type_main-medium ${styles.hover} ${isOver && styles.over}`}>Добавьте ингридиенты сюда</div>
         )}
-      </div>
+      </div>)
 }

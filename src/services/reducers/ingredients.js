@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { DATA_URL } from '../../consts'
+import { BASE_URL } from '../../consts'
 import { fetchRequestJSON } from '../../utils/api'
+
+const DATA_URL = `${BASE_URL}/ingredients`
 
 export const fetchIngredients = createAsyncThunk(
     DATA_URL,

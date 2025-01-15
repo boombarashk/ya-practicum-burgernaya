@@ -15,7 +15,7 @@ export default function Nav({currentTab}) {
         })
     }
 
-    return <div className={navStyles.tabs_container}>
+    return (<div className={navStyles.tabs_container}>
     <Tab value={TYPE_INGREDIENT[0].param}
         active={currentTab === TYPE_INGREDIENT[0].param}
         onClick={() => onSwitchTab(TYPE_INGREDIENT[0].param)}
@@ -36,5 +36,5 @@ export default function Nav({currentTab}) {
     >
         {TYPE_INGREDIENT[2].title}
     </Tab>
-    </div>
+    </div>)
 }

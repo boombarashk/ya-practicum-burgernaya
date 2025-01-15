@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { ORDER_URL } from '../../consts'
+import { BASE_URL } from '../../consts'
 import { fetchRequestJSON } from '../../utils/api'
+
+const ORDER_URL =  `${BASE_URL}/orders`
 
 export const fetchOrder = createAsyncThunk(
     ORDER_URL,

@@ -1,4 +1,16 @@
-.header-container {
+header {
+  height: 98px;
+  background-color: #1c1c21;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 24px;
+  box-shadow: 0 8px 8px -5px rgba(0, 0, 0, 0.4);
+}
+
+.header_container {
     display: flex;
     width: 100%;
     max-width: 1240px;
@@ -9,31 +21,31 @@
     align-items: center;
   }
   
-  .header-logo {
+  .header_logo {
     text-align: center;
     flex: 1;
   }
-  .header-auth-link {
+  .header_auth_link {
     display: flex;
     gap: 8px;
     cursor: pointer;
     line-height: 30px;
   }
 
-  nav ul {
+  .nav ul {
     display: flex;
   }
-  nav ul li {
+  .nav ul li {
     display: inline-flex;
     line-height: 30px;
   }
-  nav ul li:not(.active) {
+  .nav ul li:not(.active) {
     cursor: pointer;
   }
-  nav ul li + li {
+  .nav ul li + li {
     margin-left: 48px
   }
-  nav ul li svg {
+  .nav ul li svg {
     display: inline-flex;
     margin-right: 8px;
   }

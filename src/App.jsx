@@ -51,9 +51,7 @@ function App() {
 
   return (
     <>
-    <header>
-      <AppHeader/>
-    </header>
+    <AppHeader/>
     
     <div className={appStyles.top}>
       <h1 className={`${appStyles.top_container} text`}>Соберите бургер</h1>
@@ -65,7 +63,6 @@ function App() {
         {!loading && (<>
         <Nav currentTab={currentTab}/>
         <BurgerIngredients
-          ingredients={ingredientsData}
           onHandleClick={(ingredientId) => {
             setShowModal(true)
             dispatch(setCurrentIngredient(findByParam(ingredientsData, ingredientId)))
@@ -84,13 +81,13 @@ function App() {
       </DndProvider>
     </main>
 
-    <Modal onHandleClose={onModalClose} title={modalTitle} visible={showModal}>
+    {showModal && <Modal onHandleClose={onModalClose} title={modalTitle}>
       {orderId
       ? <OrderDetails orderId={orderId} />
       : currentIngredient
         ? <IngredientDetails ingredient={currentIngredient}/>
         : <p className='text text_type_main-large'>{orderError}</p>}
-    </Modal>
+    </Modal>}
     </>
   )
 }
