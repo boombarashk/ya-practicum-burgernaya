@@ -8,7 +8,7 @@ import styles from './Modal.module.css'
 const modalContentEl = document.getElementById('modal-content');
 
 Modal.propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.object,
     visible: PropTypes.bool,
     onHandleClose: PropTypes.func,
     title: PropTypes.string

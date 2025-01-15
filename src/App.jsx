@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react'
-import { DATA_URL, VIEW_MODAL_DETAILS, VIEW_MODAL_ORDER, VIEW_MODAL_TITLES } from './consts';
+import { useDispatch, useSelector } from "react-redux";
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
+
+import { VIEW_MODAL_DETAILS, VIEW_MODAL_ORDER, VIEW_MODAL_TITLES } from './consts';
+import collectIngredients from './utils/collectIngredients'
 import findByParam from './utils/findByParam';
+import useScroll from './hooks/useScroll'
+import { constructorSelector, resetConstructor } from './services/reducers/burgerConstructor'
+import { setCurrentIngredient, resetCurrentIngredient, currentIngredientSelector } from './services/reducers/currentIngredient'
+import { fetchIngredients, ingredientsSelector } from './services/reducers/ingredients'
+import { fetchOrder, resetOrder } from './services/reducers/order'
 import AppHeader from './components/AppHeader/AppHeader';
 import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor';
@@ -12,61 +22,74 @@ import Modal from './components/Modal/Modal';
 import appStyles from './App.module.css';
 
 function App() {
-  const [ingredientsData, setIngredientsData] = useState([])
+  const dispatch = useDispatch();
+  
+  const {data: ingredientsData, loading } = useSelector(ingredientsSelector)
+  const {orderId, error: orderError} = useSelector(state => state.order)
+  const {data: constructorData, baseIngredient} = useSelector(constructorSelector)
+  const currentIngredient = useSelector(currentIngredientSelector)
+
   const [showModal, setShowModal] = useState(false)
-  const [currentIngredient, setCurrentIngredient] = useState(null)
 
   useEffect(() => {
-    fetch(DATA_URL).then(res => {
-      if (!res.ok) {
-        throw new Error(`Oops ${res.status}`);
-      } 
-      return res.json();
-    }).then(data => {
-      if (data.success) setIngredientsData(data.data)
-    }).catch((e) => {
-      console.error(e.message || 'Error')
-    })
+    dispatch(fetchIngredients())
   }, [])
 
+  const { currentTab, onHandleScroll } = useScroll()
+
   const modalTitle = VIEW_MODAL_TITLES[currentIngredient ? VIEW_MODAL_DETAILS : VIEW_MODAL_ORDER]
+  const onModalClose = () => {
+    setShowModal(false)
+
+    if (orderId || orderError){
+      dispatch(resetOrder())
+      dispatch(resetConstructor())
+    } else {
+      dispatch(resetCurrentIngredient())
+    }
+  }
 
   return (
     <>
     <header>
-      <AppHeader />
+      <AppHeader/>
     </header>
     
     <div className={appStyles.top}>
       <h1 className={`${appStyles.top_container} text`}>Соберите бургер</h1>
     </div>
        
-    <main className={appStyles.container}>      
+    <main className={appStyles.container}>
+      <DndProvider backend={HTML5Backend}>  
       <div className={appStyles.column}>
-        <Nav />
-        <BurgerIngredients ingredients={ingredientsData} onHandleClick={(ingredientId) => {
-          setShowModal(true)
-          setCurrentIngredient(findByParam(ingredientsData, ingredientId))
-        }}/>
+        {!loading && (<>
+        <Nav currentTab={currentTab}/>
+        <BurgerIngredients
+          ingredients={ingredientsData}
+          onHandleClick={(ingredientId) => {
+            setShowModal(true)
+            dispatch(setCurrentIngredient(findByParam(ingredientsData, ingredientId)))
+          }}
+          onHandleScroll={onHandleScroll}/>
+        </>)}
       </div>
 
       <div className={appStyles.column}>
-        <BurgerConstructor ingredients={ingredientsData?.map(ingredient => ({
-          price: ingredient.price,
-          label: ingredient.name,
-          image: ingredient.image,
-          "_id": ingredient["_id"]
-          }))}
-          onHandleOrder={() => {
-            setShowModal(true)
-            setCurrentIngredient(null)
+        <BurgerConstructor onHandleOrder={() => {
+          dispatch(
+            fetchOrder(collectIngredients(baseIngredient, constructorData)))
+            .then(() => setShowModal(true))
           }}/>
       </div>
+      </DndProvider>
     </main>
 
-    <Modal onHandleClose={() => setShowModal(false)} title={modalTitle} visible={showModal}>
-      {!currentIngredient && <OrderDetails orderId={1123} />}
-      {currentIngredient && <IngredientDetails ingredient={currentIngredient}/>}
+    <Modal onHandleClose={onModalClose} title={modalTitle} visible={showModal}>
+      {orderId
+      ? <OrderDetails orderId={orderId} />
+      : currentIngredient
+        ? <IngredientDetails ingredient={currentIngredient}/>
+        : <p className='text text_type_main-large'>{orderError}</p>}
     </Modal>
     </>
   )
