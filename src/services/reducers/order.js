@@ -24,7 +24,8 @@ export const fetchOrder = createAsyncThunk(
 const inititalOrderState = {
     orderId: null,
     name: '',
-    error: null
+    error: null,
+    loading: false
 }
 
 const orderSlice = createSlice({
@@ -35,15 +36,19 @@ const orderSlice = createSlice({
             state.name = inititalOrderState.name
             state.error = inititalOrderState.error
             state.orderId = inititalOrderState.orderId
+            state.loading = inititalOrderState.loading
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(fetchOrder.pending, (state) => {state.loading = true})
         builder.addCase(fetchOrder.rejected, (state, action) => {
             state.error = action.error.message
+            state.loading = false
         })
         builder.addCase(fetchOrder.fulfilled, (state, action) => {
             state.name =  action.payload.name,
             state.orderId = action.payload.order.number
+            state.loading = false
         })
     }
 })

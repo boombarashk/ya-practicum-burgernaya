@@ -17,6 +17,7 @@ import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor'
 import IngredientDetails from './components/IngredientDetails/IngredientDetails';
 import OrderDetails from './components/OrderDetails/OrderDetails';
 import Nav from './components/Nav/Nav';
+import Loader from './components/Loader/Loader';
 import Modal from './components/Modal/Modal';
 
 import appStyles from './App.module.css';
@@ -24,8 +25,8 @@ import appStyles from './App.module.css';
 function App() {
   const dispatch = useDispatch();
   
-  const {data: ingredientsData, loading } = useSelector(ingredientsSelector)
-  const {orderId, error: orderError} = useSelector(state => state.order)
+  const {data: ingredientsData, loading: loadingData } = useSelector(ingredientsSelector)
+  const {orderId, error: orderError, loading: loadingOrder} = useSelector(state => state.order)
   const {data: constructorData, baseIngredient} = useSelector(constructorSelector)
   const currentIngredient = useSelector(currentIngredientSelector)
 
@@ -60,7 +61,8 @@ function App() {
     <main className={appStyles.container}>
       <DndProvider backend={HTML5Backend}>  
       <div className={appStyles.column}>
-        {!loading && (<>
+        {loadingData && <Loader />}
+        {!loadingData && (<>
         <Nav currentTab={currentTab}/>
         <BurgerIngredients
           onHandleClick={(ingredientId) => {
@@ -82,8 +84,8 @@ function App() {
     </main>
 
     {showModal && <Modal onHandleClose={onModalClose} title={modalTitle}>
-      {orderId
-      ? <OrderDetails orderId={orderId} />
+      {orderId || loadingOrder
+      ? <OrderDetails />
       : currentIngredient
         ? <IngredientDetails ingredient={currentIngredient}/>
         : <p className='text text_type_main-large'>{orderError}</p>}
