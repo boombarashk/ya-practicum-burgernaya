@@ -42,7 +42,7 @@ export default function BurgerConstructor ({onHandleOrder}) {
         {burgerConstructorData.length > 0 && <div className={`custom-scroll ${styles.inner}`}>
         {burgerConstructorData.map((ingredient, index) =>
             <DraggingConstructorElement 
-                key={`dragging-${ingredient._id}`}
+                key={ingredient.id}
                 ingredient={ingredient}
                 index={index}
             />
