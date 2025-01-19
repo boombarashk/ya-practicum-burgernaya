@@ -1,32 +1,40 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TABS } from './../../consts'
+import { TAB_SELECTOR, TYPE_INGREDIENT } from './../../consts'
 
 import navStyles from './Nav.module.css'
 
-export default function Nav() {
-    const [currentTab, setCurrentTab] = useState('bread')
+Nav.propTypes = {
+    currentTab: PropTypes.string
+}
 
-    return <div className={navStyles.tabs_container}>
-    <Tab value={TABS[0].value}
-        active={currentTab === TABS[0].value}
-        onClick={() => setCurrentTab(TABS[0].value)}
+export default function Nav({currentTab}) {
+    const onSwitchTab = (ref) => {
+        document.querySelector(`[${TAB_SELECTOR.slice(1,-1)}="${ref}"]`).scrollIntoView({
+            behavior: "smooth"
+        })
+    }
+
+    return (<div className={navStyles.tabs_container}>
+    <Tab value={TYPE_INGREDIENT[0].param}
+        active={currentTab === TYPE_INGREDIENT[0].param}
+        onClick={() => onSwitchTab(TYPE_INGREDIENT[0].param)}
     >
-        {TABS[0].label}
+        {TYPE_INGREDIENT[0].title}
     </Tab>
 
-    <Tab value={TABS[1].value}
-     active={currentTab === TABS[1].value}
-     onClick={() => setCurrentTab(TABS[1].value)}
+    <Tab value={TYPE_INGREDIENT[1].param}
+     active={currentTab === TYPE_INGREDIENT[1].param}
+     onClick={() => onSwitchTab(TYPE_INGREDIENT[1].param)}
     >
-        {TABS[1].label}
+        {TYPE_INGREDIENT[1].title}
     </Tab>
 
-    <Tab value={TABS[2].value}
-     active={currentTab === TABS[2].value}
-     onClick={() => setCurrentTab(TABS[2].value)}
+    <Tab value={TYPE_INGREDIENT[2].param}
+     active={currentTab === TYPE_INGREDIENT[2].param}
+     onClick={() => onSwitchTab(TYPE_INGREDIENT[2].param)}
     >
-        {TABS[2].label}
+        {TYPE_INGREDIENT[2].title}
     </Tab>
-    </div>
+    </div>)
 }

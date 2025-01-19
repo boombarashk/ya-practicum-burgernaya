@@ -1,19 +1,12 @@
-import PropTypes from 'prop-types'
+import { ingredientDetailsPropType }from './../../utils/types'
 import styles from './IngredientDetails.module.css'
 
 IngredientDetails.propTypes = {
-    ingredient:  PropTypes.shape({
-        name: PropTypes.string,
-        image_large: PropTypes.string,
-        fat: PropTypes.number,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        proteins: PropTypes.number,
-    })
+    ingredient:  ingredientDetailsPropType
 }
 
 export default function IngredientDetails({ingredient}) {
-    return <div className={styles.inner}>
+    return (<div className={styles.inner}>
         <img src={ingredient.image_large} alt=""/>
         
         <p className={`text ${styles.subtitle}`}>{ingredient.name}</p>
@@ -32,5 +25,5 @@ export default function IngredientDetails({ingredient}) {
                 {ingredient.carbohydrates}
                 </span></li>
         </ul>
-    </div>
+    </div>)
 }

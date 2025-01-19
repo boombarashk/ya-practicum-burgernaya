@@ -1,27 +1,34 @@
 import PropTypes from 'prop-types'
-import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd'
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { addIngredient, constructorSelector } from '../../services/reducers/burgerConstructor';
+import DraggingConstructorElement from './components/DraggingConstructorElement/DraggingConstructorElement';
 import styles from './BurgerConstructor.module.css';
 
-const ingredientPropType = PropTypes.shape({
-    "_id": PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["top", "bottom"]),
-    label: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  });
-
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-    onHandleOrder: PropTypes.func
+    onHandleOrder: PropTypes.func.isRequired
 }
 
-export default function BurgerConstructor ({ingredients, onHandleOrder}) {
-    const [baseIngredient, ...innerIngredents] = ingredients
+export default function BurgerConstructor ({onHandleOrder}) {
+    const dispatch = useDispatch()
+    const {data: burgerConstructorData, baseIngredient, finalPrice } = useSelector(constructorSelector)
 
-    if (ingredients.length === 0) return null
+    const onDropHandler = (ingredient) => {
+        dispatch(addIngredient(ingredient))
+    }
+    const [{isOver}, dropRef] = useDrop({
+        accept: 'ingredient',
+        drop(instance) {
+            onDropHandler(instance)
+        },
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        })
+    })
     
-    return <div className={styles.container}>
-        <section className={styles.section}>
+    return (<div ref={dropRef} className={styles.container}>
+        {baseIngredient && <section className={styles.section}>
             <span className={`empty ${styles.icon}`}></span>
         <ConstructorElement
             text={`${baseIngredient.label} (верх)`}
@@ -30,22 +37,19 @@ export default function BurgerConstructor ({ingredients, onHandleOrder}) {
             type="top"
             thumbnail={baseIngredient.image}
         />
-        </section>
-        
-        <div className={`custom-scroll ${styles.inner}`}>
-        {innerIngredents.map((ingredient) =>
-            <section key={ingredient._id} className={styles.section}>
-                <span className={styles.icon}><DragIcon/></span>
-                <ConstructorElement
-                text={ingredient.label}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-                />
-            </section>
-        )}
-        </div>
+        </section>}
 
-        <section className={styles.section}>
+        {burgerConstructorData.length > 0 && <div className={`custom-scroll ${styles.inner}`}>
+        {burgerConstructorData.map((ingredient, index) =>
+            <DraggingConstructorElement 
+                key={ingredient.id}
+                ingredient={ingredient}
+                index={index}
+            />
+        )}
+        </div>}
+
+        {baseIngredient && <section className={styles.section}>
             <span className={`empty ${styles.icon}`}></span>
             <ConstructorElement
                 text={`${baseIngredient.label} (низ)`}
@@ -54,14 +58,18 @@ export default function BurgerConstructor ({ingredients, onHandleOrder}) {
                 type="bottom"
                 thumbnail={baseIngredient.image}
             />
-        </section>
+        </section>}
 
-        <footer className={styles.footer}>
+        {finalPrice > 0 && baseIngredient && <footer className={styles.footer}>
             <div className={styles.info}>
-                <p className="text text_type_digits-medium">451</p>
+                <p className="text text_type_digits-medium">{finalPrice}</p>
                 <CurrencyIcon type="primary" />
             </div>
             <Button htmlType="button" type="primary" size="medium" onClick={onHandleOrder}>Оформить заказ</Button>
-        </footer>
-      </div>
+        </footer>}
+
+        {!baseIngredient && burgerConstructorData.length === 0 && (
+            <div className={`text text_type_main-medium ${styles.hover} ${isOver && styles.over}`}>Добавьте ингридиенты сюда</div>
+        )}
+      </div>)
 }

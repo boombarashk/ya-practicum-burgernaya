@@ -1,0 +1,14 @@
+
+@-webkit-keyframes rotation {
+    from {-webkit-transform: rotate(0deg);}
+    to   {-webkit-transform: rotate(359deg);}
+}
+.loader {
+    height: calc(100% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loader img {
+    -webkit-animation: rotation 2s infinite linear;
+}

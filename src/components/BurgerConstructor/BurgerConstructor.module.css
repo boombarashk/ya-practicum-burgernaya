@@ -2,7 +2,16 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    min-height: 100%;
 }
+.container .over.hover {
+    text-shadow: 1px 1px 1px salmon;
+}
+.container .hover {
+    align-self: center;
+    margin-top: 50%;
+}
+
 .container .section {
     display: flex;
     align-items: center;

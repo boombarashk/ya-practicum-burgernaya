@@ -8,13 +8,13 @@ import styles from './Modal.module.css'
 const modalContentEl = document.getElementById('modal-content');
 
 Modal.propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.object,
     visible: PropTypes.bool,
     onHandleClose: PropTypes.func,
     title: PropTypes.string
 }
 
-export default function Modal({children, title, visible = true, onHandleClose}) {
+export default function Modal({children, title, onHandleClose}) {
     useEffect(() => {
         const onHandleEscape = (e) => {
             if (e.code == "Escape") {
@@ -28,9 +28,9 @@ export default function Modal({children, title, visible = true, onHandleClose}) 
         }
     })
     
-    return createPortal(<>
-    <ModalOverlay />
-    <div className={styles.modal} style={{display: visible ? 'block': 'none'}}>
+    return createPortal(
+    <ModalOverlay onHandleClick={onHandleClose}>
+    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.close}>
             <CloseIcon type="primary" onClick={onHandleClose}/>
         </div>
@@ -43,5 +43,5 @@ export default function Modal({children, title, visible = true, onHandleClose}) 
             {children}
         </div>
     </div>
-    </>, modalContentEl)
+    </ModalOverlay>, modalContentEl)
 }
