@@ -1,0 +1,16 @@
+.aside {
+    position: absolute;
+    left: 0;
+    top: 120px;
+    width: 320px;
+    text-align: left;
+}
+.container {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding:120px 0 0 380px;
+    justify-content: normal;
+}

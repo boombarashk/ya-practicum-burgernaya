@@ -14,7 +14,7 @@ Modal.propTypes = {
     title: PropTypes.string
 }
 
-export default function Modal({children, title, onHandleClose}) {
+export default function Modal({children, title = '', onHandleClose}) {
     useEffect(() => {
         const onHandleEscape = (e) => {
             if (e.code == "Escape") {

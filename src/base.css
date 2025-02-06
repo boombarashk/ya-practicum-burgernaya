@@ -1,0 +1,36 @@
+body {
+  font-family: 'Iceland', Arial, sans-serif;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.inactive {
+  cursor: default;
+}
+.inactive svg {
+  fill: var(--inactive-color);
+}
+
+@property --container-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 1176px;
+}
+@property --inactive-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgba(133, 133, 173, 1);
+}
+@property --link-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgba(76,76,255,1);
+}

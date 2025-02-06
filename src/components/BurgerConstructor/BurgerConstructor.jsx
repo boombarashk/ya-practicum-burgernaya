@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { addIngredient, constructorSelector } from '../../services/reducers/burgerConstructor';
+import { OrderSelector } from '../../services/reducers/order'
 import DraggingConstructorElement from './components/DraggingConstructorElement/DraggingConstructorElement';
 import styles from './BurgerConstructor.module.css';
+import Loader from '../Loader/Loader';
 
 BurgerConstructor.propTypes = {
     onHandleOrder: PropTypes.func.isRequired
@@ -13,6 +15,7 @@ BurgerConstructor.propTypes = {
 export default function BurgerConstructor ({onHandleOrder}) {
     const dispatch = useDispatch()
     const {data: burgerConstructorData, baseIngredient, finalPrice } = useSelector(constructorSelector)
+    const {loading} = useSelector(OrderSelector)
 
     const onDropHandler = (ingredient) => {
         dispatch(addIngredient(ingredient))
@@ -65,7 +68,13 @@ export default function BurgerConstructor ({onHandleOrder}) {
                 <p className="text text_type_digits-medium">{finalPrice}</p>
                 <CurrencyIcon type="primary" />
             </div>
-            <Button htmlType="button" type="primary" size="medium" onClick={onHandleOrder}>Оформить заказ</Button>
+            <Button htmlType="button"
+                type="primary"
+                size="medium"
+                onClick={onHandleOrder}
+                disabled={loading}
+                style={{ width: 220}}
+            >{loading ? <Loader  isIcon/> : 'Оформить заказ'}</Button>
         </footer>}
 
         {!baseIngredient && burgerConstructorData.length === 0 && (

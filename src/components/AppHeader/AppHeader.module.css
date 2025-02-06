@@ -26,22 +26,23 @@ header {
     flex: 1;
   }
   .header_auth_link {
-    display: flex;
+    display: inline-flex;
     gap: 8px;
-    cursor: pointer;
     line-height: 30px;
+  }
+  
+  .active {
+    color: white;
   }
 
   .nav ul {
     display: flex;
   }
-  .nav ul li {
+  .nav ul li a{
     display: inline-flex;
     line-height: 30px;
   }
-  .nav ul li:not(.active) {
-    cursor: pointer;
-  }
+  
   .nav ul li + li {
     margin-left: 48px
   }

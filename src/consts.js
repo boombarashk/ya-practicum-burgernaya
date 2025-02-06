@@ -1,5 +1,17 @@
 export const BASE_URL = "https://norma.nomoreparties.space/api"
 
+export const ORDER_URL =  `${BASE_URL}/orders`
+
+export const DATA_URL = `${BASE_URL}/ingredients`
+
+export const LOGIN_URL = `${BASE_URL}/auth/login`
+export const REGISTER_URL = `${BASE_URL}/auth/register`
+export const RESTORE_URL = `${BASE_URL}/password-reset`
+export const RESET_URL = `${BASE_URL}/password-reset/reset`
+export const LOGOUT_URL = `${BASE_URL}/auth/logout`
+export const USER_URL = `${BASE_URL}/auth/user`
+export const REFRESH_TOKEN_URL = `${BASE_URL}/auth/token`
+
 export const TYPE_INGREDIENT = [
     {title: "Булки", param: "bun"},
     {title: "Соусы", param: "sauce"},
@@ -8,9 +20,8 @@ export const TYPE_INGREDIENT = [
 
 export const TAB_SELECTOR = '[data-ref]'
 
-export const VIEW_MODAL_DETAILS = 'details'
-export const VIEW_MODAL_ORDER = 'order'
-export const VIEW_MODAL_TITLES = {
-  [VIEW_MODAL_DETAILS]: 'Детали ингридиента',
-  [VIEW_MODAL_ORDER]: ''
-}
+export const PREFIX_TOKEN = 'Bearer '
+
+export const STORAGE_PWD_RESET = 'resetPassword'
+export const STORAGE_TOKEN = 'accessToken'
+export const STORAGE_TOKEN_REFRESH = 'refreshToken'
