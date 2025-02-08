@@ -1,44 +1,44 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
 }
 .container .over.hover {
-    text-shadow: 1px 1px 1px salmon;
+  text-shadow: 1px 1px 1px salmon;
 }
 .container .hover {
-    align-self: center;
-    margin-top: 50%;
+  align-self: center;
+  margin-top: 50%;
 }
 
 .container .section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .container .section .icon {
-    width: 40px;
+  width: 40px;
 }
 .container .section .icon:not(.empty) {
-    cursor: pointer;
+  cursor: pointer;
 }
 .container .inner {
-    overflow-y: auto;
-    height: calc(100vh - 480px);
+  overflow-y: auto;
+  height: calc(100vh - 480px);
 }
 .container .inner .section + .section {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
 .footer {
-    height: 64px;
-    display: flex;
-    justify-content: end;
+  height: 64px;
+  display: flex;
+  justify-content: end;
 }
 
 .footer .info {
-    display: flex;
-    gap:8px;
-    align-items: center;
-    padding-right: 40px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-right: 40px;
 }

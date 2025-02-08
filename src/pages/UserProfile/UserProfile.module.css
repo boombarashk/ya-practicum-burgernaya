@@ -1,16 +1,23 @@
-.aside {
-    position: absolute;
-    left: 0;
-    top: 120px;
-    width: 320px;
-    text-align: left;
-}
 .container {
-    position: relative;
-    width: 100%;
-    max-width: var(--container-width);
-    margin-left: auto;
-    margin-right: auto;
-    padding:120px 0 0 380px;
-    justify-content: normal;
+  display: flex;
+  width: 100%;
+  max-width: var(--container-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 120px;
+  justify-content: normal;
+}
+.aside {
+  width: 320px;
+  text-align: left;
+}
+.input {
+  margin-bottom: 24px;
+}
+.buttons button + button {
+  margin-left: 24px;
+}
+.error {
+  padding: 24px;
+  color: var(--colors-interface-error);
 }

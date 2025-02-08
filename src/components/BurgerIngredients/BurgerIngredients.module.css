@@ -1,11 +1,11 @@
 .title {
-    font-size: 30px;
+  font-size: 30px;
 }
 .list {
-    display: flex;
-    flex-wrap:wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .inner {
-    height: 100%;
-    overflow-y: auto;
+  height: 100%;
+  overflow-y: auto;
 }

@@ -1,24 +1,24 @@
 .container {
-    display: flex;
-    height: 100vh;
-    padding-top: 96px;
-    box-sizing: border-box;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  height: 100vh;
+  padding-top: 96px;
+  box-sizing: border-box;
+  align-items: center;
+  flex-direction: column;
 }
 .bg_atom {
-    width: 320px;
-    height: 320px;
-    flex: 1;
-    background-size: 320px;
-    background: center center no-repeat url(./../../images/atom-cosmos-logo.svg);
+  width: 320px;
+  height: 320px;
+  flex: 1;
+  background-size: 320px;
+  background: center center no-repeat url(./../../images/atom-cosmos-logo.svg);
 }
 
 .header {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .link {
-    text-decoration: underline;
-    color: var(--link-color)
-  }
+  text-decoration: underline;
+  color: var(--link-color);
+}

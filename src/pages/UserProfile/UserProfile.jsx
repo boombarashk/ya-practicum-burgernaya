@@ -1,71 +1,120 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Form from "../../components/Form/Form";
+import {
+  Button,
+  Input,
+  PasswordInput,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import NavProfile from "../../components/NavProfile/NavProfile";
-import collectFormValues from "../../utils/collectFormValues";
-import { ProfileSelector, getUserDetails, patchUserDetails, resetProfile } from "../../services/reducers/profile";
-import profileStyles from './UserProfile.module.css'
-
-const PROFILE_FORM_NAME = 'profile'
+import { useForm } from "../../hooks/useForm";
+import {
+  ProfileSelector,
+  getUserDetails,
+  patchUserDetails,
+  resetProfile,
+} from "../../services/reducers/profile";
+import profileStyles from "./UserProfile.module.css";
 
 export default function UserProfilePage() {
-    const { user, isAuthChecked } = useSelector(ProfileSelector)
-    const [ edited, setEdited ] = useState(false)
+  const { user, isAuthChecked, error } = useSelector(ProfileSelector);
+  const [edited, setEdited] = useState(false);
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+  const defaultValues = { name: user.name, email: user.email, password: "" };
 
+  const { values, setValues, handleChange } = useForm(defaultValues);
 
-    useEffect(() => {
+  const customHandleChange = (ev) => {
+    setEdited(true);
+    handleChange(ev);
+  };
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
     const handleReset = () => {
-        dispatch(resetProfile())
-        navigate('/login')
+      dispatch(resetProfile());
+      navigate("/login");
+    };
+    if (typeof user.name === "undefined" && !isAuthChecked) {
+      dispatch(getUserDetails())
+        .then((res) => {
+          if (!res.payload?.success) {
+            handleReset();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          handleReset();
+        });
     }
-            if (typeof user.name === 'undefined' && !isAuthChecked) {
-                dispatch(getUserDetails()).then(res => {
-                    if (!res.payload?.success) {
-                        handleReset()
-                    }
-                }).catch((err) =>{
-                    console.log(err)
-                    handleReset()
-                })
-            }
-        }, [dispatch, user.name, isAuthChecked, navigate])
-        
-    const defaultValues = [user.name, user.email, '']
-    const fields = [
-        {inputType: 'text', placeholder: 'Имя', inputName: 'name', value: defaultValues[0], icon: "EditIcon"},
-        {inputType: 'email', placeholder: 'Логин', inputName: 'email', value: defaultValues[1], icon: "EditIcon"},
-        {inputType: 'password', placeholder: 'Пароль', inputName: 'password', value: defaultValues[2]}
-    ];
+  }, [dispatch, user.name, isAuthChecked, navigate]);
 
-    return (<Form formName={PROFILE_FORM_NAME}
-        setEdited={setEdited}
-        formClassName={profileStyles.container}
-        fields={fields}
-        initialValues={collectFormValues(fields)}
-        buttons={edited ? [
-            {text: 'Сохранить', htmlType: 'submit', handleClick: (formData) => {
-                dispatch(patchUserDetails(formData)).then((res) =>{
-                    if (res?.payload.success){
-                        setEdited(false)
-                    }
-                })
-            }},
-            {text: 'Отмена', handleClick: () => {/*
-                fields.forEach((field, ind) => {
-                    document.forms[PROFILE_FORM_NAME][field.inputName].value = defaultValues[ind];
-                    fields[ind].value = defaultValues[ind];
-                })*/
-               navigate(0)
-                //setEdited(false)
-            }, isSecondary: true}
-        ] : null}
-        >
-        <aside className={profileStyles.aside}>
-            <NavProfile/>
-        </aside>
-    </Form>)
+  return (
+    <main className={profileStyles.container}>
+      <div className={profileStyles.aside}>
+        <NavProfile />
+      </div>
+
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          dispatch(patchUserDetails(values)).then((res) => {
+            if (res?.payload.success) {
+              setEdited(false);
+            }
+          });
+        }}
+        name="profile"
+        className={profileStyles.form}>
+        <Input
+          type="text"
+          name={"name"}
+          placeholder="Имя"
+          value={values.name ?? ""}
+          onChange={customHandleChange}
+          icon="EditIcon"
+          extraClass={profileStyles.input}
+        />
+
+        <Input
+          name={"email"}
+          placeholder={"Логин"}
+          value={values.email ?? ""}
+          onChange={customHandleChange}
+          icon="EditIcon"
+          extraClass={profileStyles.input}
+        />
+
+        <PasswordInput
+          name={"password"}
+          value={values.password ?? ""}
+          onChange={customHandleChange}
+          extraClass={profileStyles.input}
+        />
+
+        {edited && (
+          <div className={profileStyles.buttons}>
+            <Button htmlType="submit" type="primary">
+              Сохранить
+            </Button>
+            <Button
+              htmlType={"button"}
+              type="secondary"
+              onClick={() => {
+                setValues(defaultValues);
+                setEdited(false);
+              }}>
+              Отмена
+            </Button>
+          </div>
+        )}
+
+        {error && (
+          <div className={profileStyles.error}>Ошибка отправки формы</div>
+        )}
+      </form>
+    </main>
+  );
 }

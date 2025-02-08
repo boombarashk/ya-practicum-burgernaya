@@ -1,5 +1,5 @@
 body {
-  font-family: 'Iceland', Arial, sans-serif;
+  font-family: "Iceland", Arial, sans-serif;
 }
 
 ul {
@@ -32,5 +32,5 @@ a {
 @property --link-color {
   syntax: "<color>";
   inherits: false;
-  initial-value: rgba(76,76,255,1);
+  initial-value: rgba(76, 76, 255, 1);
 }

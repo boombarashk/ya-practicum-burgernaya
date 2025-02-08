@@ -11,42 +11,42 @@ header {
 }
 
 .header_container {
-    display: flex;
-    width: 100%;
-    max-width: 1240px;
-    height: auto;
-    padding: 0;
-    margin: 0 auto;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .header_logo {
-    text-align: center;
-    flex: 1;
-  }
-  .header_auth_link {
-    display: inline-flex;
-    gap: 8px;
-    line-height: 30px;
-  }
-  
-  .active {
-    color: white;
-  }
+  display: flex;
+  width: 100%;
+  max-width: 1240px;
+  height: auto;
+  padding: 0;
+  margin: 0 auto;
+  flex-direction: row;
+  align-items: center;
+}
 
-  .nav ul {
-    display: flex;
-  }
-  .nav ul li a{
-    display: inline-flex;
-    line-height: 30px;
-  }
-  
-  .nav ul li + li {
-    margin-left: 48px
-  }
-  .nav ul li svg {
-    display: inline-flex;
-    margin-right: 8px;
-  }
+.header_logo {
+  text-align: center;
+  flex: 1;
+}
+.header_auth_link {
+  display: inline-flex;
+  gap: 8px;
+  line-height: 30px;
+}
+
+.active {
+  color: white;
+}
+
+.nav ul {
+  display: flex;
+}
+.nav ul li a {
+  display: inline-flex;
+  line-height: 30px;
+}
+
+.nav ul li + li {
+  margin-left: 48px;
+}
+.nav ul li svg {
+  display: inline-flex;
+  margin-right: 8px;
+}

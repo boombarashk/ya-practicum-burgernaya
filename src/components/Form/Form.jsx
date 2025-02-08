@@ -1,89 +1,114 @@
-import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { formPropType } from '../../utils/types'
-import Modal from '../Modal/Modal'
-import { ProfileSelector, resetProfileError } from '../../services/reducers/profile'
-import styles from './Form.module.css'
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import {
+  Button,
+  EmailInput,
+  Input,
+  PasswordInput,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { fieldPropType, buttonPropType } from "../../utils/types";
+import { ProfileSelector } from "../../services/reducers/profile";
+import { useForm } from "../../hooks/useForm";
+import styles from "./Form.module.css";
 
-Form.propTypes = formPropType
+Form.propTypes = {
+  formName: PropTypes.string,
+  formTitle: PropTypes.string,
+  formFields: PropTypes.arrayOf(fieldPropType),
+  buttons: PropTypes.arrayOf(buttonPropType),
+  children: PropTypes.node,
+  initialValues: PropTypes.shape(PropTypes.object),
+  handleSubmit: PropTypes.func.isRequired,
+};
 
-export default function Form({children, fields, buttons, title, formName, initialValues = {}, formClassName, setEdited}) {
-    const dispatch = useDispatch()
-    const { error: errorMsg } = useSelector(ProfileSelector)
+export default function Form({
+  formFields,
+  buttons,
+  formTitle,
+  formName,
+  initialValues,
+  handleSubmit,
+  children,
+}) {
+  const { error: errorMsg } = useSelector(ProfileSelector);
 
-    const [values, setValues] = useState(initialValues)
+  const { values, handleChange } = useForm(initialValues);
 
-    const [showModal, setShowModal] = useState(false)
-    const handleModalClose = () => {
-        setShowModal(false)
-        dispatch(resetProfileError())
-    }
-    useEffect(() => {
-        if (errorMsg) {
-            setShowModal(true)
-        }
-    }, [errorMsg])
+  //customHandleChange dispatch(resetProfileError());
 
-    const handleChange = (ev, inputName) => {
-        setValues({...values, [inputName]: ev.target.value})
-        if (typeof setEdited === 'function'){
-            setEdited(true)
-        }
-    }
+  return (
+    <form
+      name={formName}
+      onSubmit={(ev) => {
+        ev.preventDefault();
+        handleSubmit(values);
+      }}
+      className={styles.container}>
+      {formTitle && <h1 className={styles.title}>{formTitle}</h1>}
 
-    return (<><form name={formName}
-        className={`${styles.container} ${formClassName ?? ''}`}>
-        {title && (<h1 className={styles.title}>{title}</h1>)}
+      {formFields.map((field) => {
+        const inputValue = values[field.inputName] ?? "";
+        const keyValue = `${formName}-${field.inputName}`;
+        const iconProp = field.icon ? { icon: field.icon } : {};
 
-        {fields.map(field => {
-            const defaultValue = values[field.inputName] ?? '';
-            const keyValue = `${formName}-${field.inputName}`;
-            const iconProp = field.icon ? {icon: field.icon} : {};
-
-            switch (field.inputType) {
-                case "password": return (<PasswordInput key={keyValue}
-                onChange={(ev) => handleChange(ev, field.inputName)}
-                value={defaultValue}
-                name={field.inputName}
-                {...iconProp}
-              />);
-              case "email": return (<EmailInput key={keyValue}
+        switch (field.inputType) {
+          case "password":
+            return (
+              <PasswordInput
+                key={keyValue}
+                onChange={handleChange}
+                value={inputValue}
                 name={field.inputName}
                 placeholder={field.placeholder}
-                value={defaultValue}
-                onChange={(ev) => handleChange(ev, field.inputName)}
                 {...iconProp}
-                />)
-              default: return (<Input key={keyValue}
+              />
+            );
+          case "email":
+            return (
+              <EmailInput
+                key={keyValue}
                 name={field.inputName}
                 placeholder={field.placeholder}
-                value={defaultValue}
-                onChange={(ev) => handleChange(ev, field.inputName)}
+                value={inputValue}
+                onChange={handleChange}
                 {...iconProp}
-                />)                
-            }
-        })}
+              />
+            );
+          default:
+            return (
+              <Input
+                key={keyValue}
+                name={field.inputName}
+                placeholder={field.placeholder}
+                value={inputValue}
+                onChange={handleChange}
+                {...iconProp}
+              />
+            );
+        }
+      })}
 
-        <div className={styles.buttons}>
+      <div className={styles.buttons}>
         {buttons?.map((button, ind) => {
-            return <Button key={`${formName}-button-${ind}`}
-                htmlType={button.htmlType ?? 'button'}
-                type={button.isSecondary ? "secondary" : "primary"}
-                onClick={(ev) => {
-                    ev.preventDefault()
-                    button.handleClick(values)
-                    }}>
-                    {button.text}
+          return (
+            <Button
+              key={`${formName}-button-${ind}`}
+              htmlType={button.htmlType ?? "button"}
+              type={button.isSecondary ? "secondary" : "primary"}
+              onClick={(ev) => {
+                if (typeof button.handleClick === "function") {
+                  button.handleClick(ev);
+                }
+              }}>
+              {button.text}
             </Button>
+          );
         })}
-        </div>
+      </div>
 
-        <div className={styles.footers}>{children}</div>
+      {errorMsg && <div className={styles.error}>{errorMsg}</div>}
+
+      <div className={styles.footers}>{children}</div>
     </form>
-
-    {showModal && (<Modal onHandleClose={handleModalClose}>
-        <p className='text text_type_main-large'>{errorMsg}</p>
-    </Modal>)}
-    </>)
+  );
 }
