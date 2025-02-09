@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  height: calc(100vh - 100px);
+  width: 480px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+  justify-content: center;
+}
+@media screen and (max-height: 700px) {
+  .container {
+    padding-top: 100px;
+  }
+}
+
+.title {
+  font-size: 24px;
+  margin: 0;
+}
+.buttons {
+  width: 480px;
+  padding-bottom: 56px;
+}
+.error {
+  position: absolute;
+  color: var(--colors-interface-error);
+}
+.footer {
+  text-align: left;
+}

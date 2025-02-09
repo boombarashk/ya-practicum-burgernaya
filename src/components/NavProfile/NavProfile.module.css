@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 80px;
+}
+
+.link {
+  height: 64px;
+  font-size: 24px;
+}
+
+a:hover span,
+a.link_active span {
+  color: white;
+}

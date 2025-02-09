@@ -1,14 +1,14 @@
 .done {
-    display: inline-block;
-    margin: 60px auto;
-    width: 120px;
-    height: 120px;
-    background: center center no-repeat url(../../images/done.svg);
+  display: inline-block;
+  margin: 60px auto;
+  width: 120px;
+  height: 120px;
+  background: center center no-repeat url(../../images/done.svg);
 }
 .title {
-    margin-top: 18px;
-    font-size: 24px;
+  margin-top: 18px;
+  font-size: 24px;
 }
 .subtitle {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
