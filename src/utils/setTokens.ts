@@ -1,0 +1,12 @@
+import { STORAGE_TOKEN, STORAGE_TOKEN_REFRESH, PREFIX_TOKEN } from "../consts";
+
+export default function setTokens({
+  accessToken,
+  refreshToken,
+}: {
+  accessToken: string;
+  refreshToken: string;
+}): void {
+  localStorage.setItem(STORAGE_TOKEN, accessToken.split(PREFIX_TOKEN)[1]);
+  localStorage.setItem(STORAGE_TOKEN_REFRESH, refreshToken);
+}
