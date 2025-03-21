@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { fetchLogin } from "../../services/reducers/profile";
 import Form from "../../components/Form/Form";
 import { ButtonTypeEnum, InputTypeEnum } from "../../utils/types";
-import { AppDispatch } from "../../store";
+import { useAppDispatch } from "../../store";
 
 export default function LoginPage(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   return (
     <Form

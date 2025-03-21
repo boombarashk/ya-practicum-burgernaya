@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { AppDispatch, RootState } from "../../store";
+import { RootState, useAppDispatch } from "../../store";
+import { TIngredientFullInfo } from "../../utils/types";
 import collectIngredients from "../../utils/collectIngredients";
 import findByParam from "../../utils/findByParam";
 import useScroll from "../../hooks/useScroll";
-import { fetchIngredients } from "../../services/reducers/ingredients";
 import { fetchOrder, resetOrder } from "../../services/reducers/order";
 import {
   constructorSelector,
@@ -27,19 +27,16 @@ import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredie
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import { STORAGE_TOKEN } from "../../consts";
+import useModal from "../../hooks/useModal";
 import styles from "./Home.module.css";
 
 export default function HomePage(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { currentTab, onHandleScroll } = useScroll();
 
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, []);
-
-  const [showModal, setShowModal] = useState(false);
+  //const [showModal, setShowModal] = useState(false);
 
   const { data: ingredientsData, loading: loadingData } =
     useSelector(ingredientsSelector);
@@ -53,6 +50,11 @@ export default function HomePage(): React.JSX.Element {
   } = useSelector((state: RootState) => state.order);
   const currentIngredient = useSelector(currentIngredientSelector);
 
+  const { showModal, setShowModal } = useModal({
+    checkState: currentIngredient,
+    redirectUrl: `${location.href}ingredients/${currentIngredient?._id}`,
+  });
+  /*
   useEffect(() => {
     if (showModal && currentIngredient) {
       // browser location and history
@@ -63,7 +65,7 @@ export default function HomePage(): React.JSX.Element {
       );
     }
   }, [showModal, currentIngredient]);
-
+*/
   const handleModalClose = () => {
     setShowModal(false);
     if (orderId || orderError) {

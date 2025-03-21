@@ -24,6 +24,26 @@ a {
   inherits: false;
   initial-value: 1176px;
 }
+@property --column-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 568px;
+}
+@property --column-gap {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 40px;
+}
+@property --h1-size {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 36px;
+}
+@property --h2-size {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 28px;
+}
 @property --inactive-color {
   syntax: "<color>";
   inherits: false;
@@ -33,4 +53,9 @@ a {
   syntax: "<color>";
   inherits: false;
   initial-value: rgba(76, 76, 255, 1);
+}
+@property --success-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgba(0, 204, 204, 1);
 }

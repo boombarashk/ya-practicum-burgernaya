@@ -1,23 +1,15 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { AppDispatch, ingredientsSelector } from "../../store";
-import { fetchIngredients } from "../../services/reducers/ingredients";
+import { ingredientsSelector } from "../../store";
 import findByParam from "../../utils/findByParam";
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 import Loader from "../../components/Loader/Loader";
 import styles from "./Ingredient.module.css";
 
 export default function IngredientPage(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
   const { data: ingredientsData, loading } = useSelector(ingredientsSelector);
   const { id } = useParams();
-
-  useEffect(() => {
-    if (ingredientsData.length === 0) {
-      dispatch(fetchIngredients());
-    }
-  }, [ingredientsData]);
 
   const ingredient = id ? findByParam(ingredientsData, id) : null;
 

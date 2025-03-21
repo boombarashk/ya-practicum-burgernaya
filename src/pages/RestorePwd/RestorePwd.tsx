@@ -1,14 +1,17 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { fetchRestore } from "../../services/reducers/profile";
 import Form from "../../components/Form/Form";
 import { STORAGE_PWD_RESET } from "../../consts";
-import { AppDispatch } from "../../store";
-import { ButtonTypeEnum, InputTypeEnum } from "../../utils/types";
+import { useAppDispatch } from "../../store";
+import {
+  ButtonTypeEnum,
+  InputTypeEnum,
+  TResponseWithSuccess,
+} from "../../utils/types";
 
 export default function RestorePwdPage(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   return (
@@ -17,7 +20,10 @@ export default function RestorePwdPage(): React.JSX.Element {
       formName="restorepwd"
       handleSubmit={(formData) => {
         dispatch(fetchRestore(formData)).then((res) => {
-          if (res.payload?.success) {
+          if (
+            "payload" in res &&
+            (res.payload as TResponseWithSuccess).success
+          ) {
             localStorage.setItem(STORAGE_PWD_RESET, String(true));
             navigate("/reset-password");
           }

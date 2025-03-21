@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -8,20 +8,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import NavProfile from "../../components/NavProfile/NavProfile";
 import { useForm } from "../../hooks/useForm";
-import { AppDispatch, ProfileSelector } from "../../store";
+import { ProfileSelector, useAppDispatch } from "../../store";
 import {
   getUserDetails,
   patchUserDetails,
   resetProfile,
 } from "../../services/reducers/profile";
 import profileStyles from "./UserProfile.module.css";
-import { TUser } from "../../utils/types";
+import { TResponseWithSuccess, TUser } from "../../utils/types";
 
 export default function UserProfilePage(): React.JSX.Element {
   const { user, isAuthChecked, error } = useSelector(ProfileSelector);
   const [edited, setEdited] = useState(false);
 
-  const defaultValues: Partial<TUser> = { name: user.name, email: user.email, password: "" };
+  const defaultValues: Partial<TUser> = {
+    name: user.name,
+    email: user.email,
+    password: "",
+  };
 
   const { values, setValues, handleChange } = useForm(defaultValues);
 
@@ -30,7 +34,7 @@ export default function UserProfilePage(): React.JSX.Element {
     handleChange(ev);
   };
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +45,11 @@ export default function UserProfilePage(): React.JSX.Element {
     if (typeof user.name === "undefined" && !isAuthChecked) {
       dispatch(getUserDetails())
         .then((res) => {
-          if (!res.payload?.success) {
+          if (
+            !(
+              "payload" in res && (res.payload as TResponseWithSuccess)?.success
+            )
+          ) {
             handleReset();
           }
         })
@@ -62,7 +70,10 @@ export default function UserProfilePage(): React.JSX.Element {
         onSubmit={(ev) => {
           ev.preventDefault();
           dispatch(patchUserDetails(values)).then((res) => {
-            if (res?.payload.success) {
+            if (
+              "payload" in res &&
+              (res.payload as TResponseWithSuccess).success
+            ) {
               setEdited(false);
             }
           });

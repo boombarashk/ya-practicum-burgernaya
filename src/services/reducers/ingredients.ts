@@ -38,23 +38,13 @@ const ingredientsSlice = createSlice({
     builder.addCase(fetchIngredients.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(
-      fetchIngredients.fulfilled,
-      (
-        state,
-        action /*: {
-      payload: TIngredientFullInfo[],
-      type: string,
-      meta: unknown
-    }*/,
-      ) => {
-        state.loading = false;
-        // fix twice fetch
-        if (state.data.length === 0 && action.payload) {
-          state.data.push(...action.payload);
-        }
-      },
-    );
+    builder.addCase(fetchIngredients.fulfilled, (state, action) => {
+      state.loading = false;
+      // fix twice fetch
+      if (state.data.length === 0 && action.payload) {
+        state.data.push(...action.payload);
+      }
+    });
   },
 });
 

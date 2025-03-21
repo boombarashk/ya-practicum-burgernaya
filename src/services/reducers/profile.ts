@@ -9,19 +9,15 @@ import {
 } from "../../consts";
 import { fetchRequestJSON, fetchWithRefresh } from "../../utils/api.ts";
 import setTokens from "../../utils/setTokens.ts";
-import { TUser, TValues } from "../../utils/types.ts";
+import {
+  TUser,
+  TValues,
+  TResponse,
+  TResponseWithSuccess,
+  TResponseWithTokens,
+} from "../../utils/types.ts";
 
 type TBodyForms = TValues<string, unknown>;
-
-type TResponse = {
-  success?: boolean,
-  user: Omit<TUser, 'password'>,
-}
-
-type TResponseWithTokens = TResponse & {
-  accessToken: string,
-  refreshToken: string
-}
 
 type TResponseProfile = TResponse | TResponseWithTokens;
 
@@ -71,15 +67,23 @@ export const fetchReset = (body: TBodyForms) =>
 export const fetchLogout = (body: { token: string }) =>
   fetchProfileRequest(LOGOUT_URL)(body);
 
-export const getUserDetails = createAsyncThunk<TResponse | void, unknown, {rejectValue: unknown}>(USER_URL, async () =>
+export const getUserDetails = createAsyncThunk<
+  TResponse | void,
+  void,
+  { rejectValue: unknown }
+>(USER_URL, async () =>
   fetchWithRefresh<TResponse>(USER_URL, {
     method: "GET",
   }).catch((e: Error) => {
     console.log(e.message);
   }),
 );
-export const patchUserDetails = createAsyncThunk<{success?: boolean} | void, TBodyForms, {rejectValue: unknown}>(USER_URL, async (body) =>
-  fetchWithRefresh<{success?: boolean}>(USER_URL, {
+export const patchUserDetails = createAsyncThunk<
+  TResponseWithSuccess | void,
+  TBodyForms,
+  { rejectValue: unknown }
+>(USER_URL, async (body) =>
+  fetchWithRefresh<TResponseWithSuccess>(USER_URL, {
     method: "PATCH",
     body: JSON.stringify(body),
   }).catch((e: Error) => {
@@ -111,27 +115,36 @@ const profileSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(`${LOGIN_URL}/fulfilled`, (state, action: PayloadAction<TResponseWithTokens>) => {
-      if (action.payload?.success) {
-        setTokens(action.payload);
-        state.user = action.payload.user;
+    builder.addCase(`${LOGIN_URL}/fulfilled`, (state, action) => {
+      if ("payload" in action) {
+        const payload: TResponseWithTokens =
+          action.payload as TResponseWithTokens;
+        if (payload.success) {
+          setTokens(payload);
+          state.user = payload.user;
+        }
       }
     });
-    builder.addCase(`${REGISTER_URL}/fulfilled`, (state, action: PayloadAction<TResponseWithTokens>) => {
-      if (action.payload?.success) {
-        setTokens(action.payload);
-        state.user = action.payload.user;
+    builder.addCase(`${REGISTER_URL}/fulfilled`, (state, action) => {
+      if ("payload" in action) {
+        const payload: TResponseWithTokens =
+          action.payload as TResponseWithTokens;
+        if (payload.success) {
+          setTokens(payload);
+          state.user = payload.user;
+        }
       }
     });
-    builder.addCase(`${RESET_URL}/fulfilled`, (state) => {
-      profileSlice.actions.resetProfile(state);
+    builder.addCase(`${RESET_URL}/fulfilled`, (/*state*/) => {
+      //todo check it
+      profileSlice.actions.resetProfile();
     });
     builder.addCase(getUserDetails.pending, (state) => {
       // GET and PATCH
       state.isAuthChecked = true;
     });
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
-      if (action?.payload?.success) {
+      if ("payload" in action && action?.payload?.success) {
         state.user = { ...action.payload.user };
       }
     });
@@ -151,7 +164,10 @@ const profileSlice = createSlice({
       )
       .addMatcher(
         (action) => action.type.match(new RegExp(`[${REGEXP_URLS}]/rejected`)),
-        (state, action: PayloadAction<{ success?: boolean, payload?: string}>) => {
+        (
+          state,
+          action: PayloadAction<{ success?: boolean; payload?: string }>,
+        ) => {
           if (!action?.payload?.success) {
             state.error = String(action.payload);
             state.loading = false;

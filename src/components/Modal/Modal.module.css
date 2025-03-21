@@ -22,7 +22,7 @@
 
 .title {
   position: absolute;
-  font-size: 36px;
+  font-size: var(--h1-size);
   margin: 0;
   top: 20px;
   left: 40px;

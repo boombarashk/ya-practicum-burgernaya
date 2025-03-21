@@ -9,11 +9,5 @@
   text-align: center;
 }
 .detail .price {
-  display: flex;
-  font-size: 28px;
-  gap: 8px;
-  align-items: center;
   justify-content: center;
-}
-.focus {
 }

@@ -11,7 +11,7 @@
   composes: inner;
 }
 .top h1 {
-  font-size: 36px;
+  font-size: var(--h1-size);
   line-height: 2.4;
 }
 
@@ -23,10 +23,10 @@
 }
 
 .column {
-  width: 568px;
+  width: var(--column-width);
   /*overflow-x: hidden;*/
 }
 
 .column + .column {
-  margin-left: 40px;
+  margin-left: var(--column-gap);
 }
