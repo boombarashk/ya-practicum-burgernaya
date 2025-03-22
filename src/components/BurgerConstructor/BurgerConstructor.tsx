@@ -12,6 +12,7 @@ import { constructorSelector, OrderSelector } from "../../store";
 import DraggingConstructorElement from "./components/DraggingConstructorElement/DraggingConstructorElement";
 import Loader from "../Loader/Loader";
 import styles from "./BurgerConstructor.module.css";
+import Price from "../Price/Price";
 
 type TBurgerConstructorProps = {
   onHandleOrder: () => void;
@@ -83,10 +84,11 @@ export default function BurgerConstructor({
 
       {finalPrice > 0 && baseIngredient && (
         <footer className={styles.footer}>
-          <div className={styles.info}>
+          <Price customClassName={styles.info} value={finalPrice} />
+          {/*<div className={styles.info}>
             <p className="text text_type_digits-medium">{finalPrice}</p>
             <CurrencyIcon type="primary" />
-          </div>
+          </div>*/}
           <Button
             htmlType="button"
             type="primary"

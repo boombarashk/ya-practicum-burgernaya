@@ -43,24 +43,12 @@ export const fetchWithRefresh = async <T>(
   } catch (err) {
     if ((err as Error).message === "jwt expired") {
       // обновление токена
-      const refreshData = await fetchRequestJSON<{
-        success: boolean;
-        accessToken: string;
-        refreshToken: string;
-      }>(REFRESH_TOKEN_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          token: localStorage.getItem(STORAGE_TOKEN_REFRESH),
-        }),
-      });
+      const refreshData = await refreshToken();
       options.headers.authorization = refreshData.accessToken;
       // повторный запрос
       const res = await fetch(url, options);
       setTokens({ ...refreshData });
-      /*fixme
+      /*fixme delete
       localStorage.setItem(REFRESH_TOKEN_URL, refreshData.refreshToken); 
       localStorage.setItem(STORAGE_TOKEN, refreshData.accessToken);*/
       return await checkReponse(res);
@@ -69,3 +57,18 @@ export const fetchWithRefresh = async <T>(
     }
   }
 };
+
+export const refreshToken = async () =>
+  fetchRequestJSON<{
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+  }>(REFRESH_TOKEN_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem(STORAGE_TOKEN_REFRESH),
+    }),
+  });

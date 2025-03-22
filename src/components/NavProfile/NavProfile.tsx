@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { fetchLogout, resetProfile } from "../../services/reducers/profile";
 import { STORAGE_TOKEN_REFRESH } from "../../consts";
 import navStyles from "./NavProfile.module.css";
-import { AppDispatch } from "../../store";
+import { useAppDispatch } from "../../store";
 
 export default function NavProfile(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,6 +23,7 @@ export default function NavProfile(): React.JSX.Element {
       <ul className={navStyles.container}>
         <li className={navStyles.link}>
           <NavLink
+            end
             to="/profile"
             className={({ isActive }) =>
               isActive ? navStyles.link_active : ""

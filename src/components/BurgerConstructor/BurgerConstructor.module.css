@@ -37,8 +37,5 @@
 }
 
 .footer .info {
-  display: flex;
-  gap: 8px;
-  align-items: center;
   padding-right: 40px;
 }

@@ -1,6 +1,6 @@
 import { IngredientTypeEnum } from "./utils/types";
 
-export const BASE_URL = "https://norma.nomoreparties.space/api";
+const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export const ORDER_URL = `${BASE_URL}/orders`;
 
@@ -30,3 +30,9 @@ export const PREFIX_TOKEN = "Bearer ";
 export const STORAGE_PWD_RESET = "resetPassword";
 export const STORAGE_TOKEN = "accessToken";
 export const STORAGE_TOKEN_REFRESH = "refreshToken";
+
+export const MAX_PREVIEW_INGREDIENTS = 6;
+
+const BASE_WS_URL = "wss://norma.nomoreparties.space";
+export const WS_ORDERS_URL = `${BASE_WS_URL}/orders`;
+export const WS_ALL_ORDERS_URL = `${BASE_WS_URL}/orders/all`;

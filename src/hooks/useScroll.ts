@@ -7,7 +7,7 @@ type THTMLElementEvent<T extends HTMLElement> = React.SyntheticEvent & {
 };
 
 const isHTMLElementWithDataset = (el: HTMLElement | null): el is HTMLElement =>
-  el !== null && "dataset" in el;
+  el !== null && typeof el !== "undefined" && "dataset" in el;
 
 const useScroll = () => {
   const [visibleHeader, setVisibleHeader] = useState<IngredientTypeEnum | null>(
@@ -19,13 +19,11 @@ const useScroll = () => {
   const onHandleScroll = (ev: React.SyntheticEvent) => {
     const scrollContainer = (ev as THTMLElementEvent<HTMLElement>).target;
 
-    const headers: HTMLElement[] = Array.from(
-      scrollContainer.querySelectorAll(TAB_SELECTOR),
-    );
+    const headers = scrollContainer.querySelectorAll(TAB_SELECTOR);
     closestHeader = null;
     let closestDistance = Infinity;
 
-    headers.forEach((header) => {
+    (Array.from(headers) as HTMLElement[]).forEach((header) => {
       const headerRect = header.getBoundingClientRect();
       const scrollContainerRect = scrollContainer.getBoundingClientRect();
 

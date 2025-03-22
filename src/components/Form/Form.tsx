@@ -34,8 +34,6 @@ export default function Form({
 
   const { values, handleChange } = useForm(initialValues);
 
-  //customHandleChange dispatch(resetProfileError());
-
   return (
     <form
       name={formName}

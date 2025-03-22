@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  height: calc(100vh - 100px);
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner {
+  width: 640px;
+}

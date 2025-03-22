@@ -6,6 +6,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import styles from "./AppHeader.module.css";
 
 export default function AppHeader(): React.JSX.Element {
@@ -24,7 +25,7 @@ export default function AppHeader(): React.JSX.Element {
               </NavLink>
             </li>
             <li key={"ribbon-page"}>
-              <NavLink to="/order" className={addActiveClassName}>
+              <NavLink to="/feed" className={addActiveClassName}>
                 <ListIcon type="secondary" />
                 Лента заказов
               </NavLink>

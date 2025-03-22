@@ -2,12 +2,10 @@ import { TIngredientFullInfo } from "../../../../utils/types";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import {
-  Counter,
-  CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragCollectedProps } from "../../../../utils/types";
 import { constructorSelector } from "../../../../store";
+import Price from "../../../Price/Price";
 import styles from "./BurgerIngredientInstance.module.css";
 
 type TBurgerIngredientInstanceProps = {
@@ -47,10 +45,7 @@ function BurgerIngredientInstance({
 
       <img ref={dragRef} src={ingredient.image} alt="" />
 
-      <span className={styles.price}>
-        {ingredient.price}
-        <CurrencyIcon type="primary" />
-      </span>
+      <Price customClassName={styles.price} value={ingredient.price} />
 
       <h3 className={styles.title}>{ingredient.name}</h3>
     </div>

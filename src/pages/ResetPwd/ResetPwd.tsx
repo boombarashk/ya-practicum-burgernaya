@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../store";
-import { ButtonTypeEnum, InputTypeEnum } from "../../utils/types";
+import { useAppDispatch } from "../../store";
+import {
+  ButtonTypeEnum,
+  InputTypeEnum,
+  TResponseWithSuccess,
+} from "../../utils/types";
 import { fetchReset } from "../../services/reducers/profile";
 import Form from "../../components/Form/Form";
 import { STORAGE_PWD_RESET } from "../../consts";
 
 export default function ResetPwdPage(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,8 +28,10 @@ export default function ResetPwdPage(): React.JSX.Element {
       handleSubmit={(formData) => {
         dispatch(fetchReset(formData)).then((res) => {
           localStorage.removeItem(STORAGE_PWD_RESET);
-
-          if (res?.payload.success) {
+          if (
+            "payload" in res &&
+            (res.payload as TResponseWithSuccess).success
+          ) {
             navigate("/login", { replace: true });
           }
         });

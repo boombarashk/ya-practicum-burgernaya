@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
+import { useAppDispatch } from "../../store";
 import { ButtonTypeEnum, InputTypeEnum } from "../../utils/types";
 import { fetchRegister } from "../../services/reducers/profile";
 import Form from "../../components/Form/Form";
 
 export default function RegisterPage(): React.JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   return (
     <Form

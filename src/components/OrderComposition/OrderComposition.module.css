@@ -1,0 +1,51 @@
+.container {
+  text-align: left;
+}
+.order_id {
+  font-size: var(--h2-size);
+  text-align: center;
+  margin: 0 0 36px;
+}
+
+.title {
+  font-size: var(--h2-size);
+  padding: 0;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: var(--h2-size);
+}
+
+.status {
+}
+
+.success {
+  color: var(--success-color);
+}
+
+.list {
+  max-height: 312px;
+  overflow-y: auto;
+}
+
+.ingredient_row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.ingredient_row + .ingredient_row {
+  margin-top: 1em;
+}
+
+.ingredient_name {
+  flex-grow: 1;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 48px;
+}
