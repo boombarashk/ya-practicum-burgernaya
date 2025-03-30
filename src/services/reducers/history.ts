@@ -15,8 +15,7 @@ export type THistoryState = {
   totalToday: number;
 };
 
-const initialState: THistoryState = {
-  //loading?: boolean;  === SocketStateEnum.CONNECTING
+export const initialState: THistoryState = {
   status: SocketStateEnum.OFFLINE,
   orders: [],
   error: null,
@@ -43,10 +42,12 @@ const historySlice = createSlice({
     },
     wsMessage: (state, action: PayloadAction<TResponseOrdersWithStore>) => {
       const { data, rootState } = action.payload;
+
       const ingredientsData = (
         rootState as Partial<{ ingredients: { data: TIngredientFullInfo[] } }>
       ).ingredients?.data;
       const { orders } = action.payload.data;
+
       state.orders = orders
         .sort(
           (oPrev, oNext) =>

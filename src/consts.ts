@@ -36,3 +36,5 @@ export const MAX_PREVIEW_INGREDIENTS = 6;
 const BASE_WS_URL = "wss://norma.nomoreparties.space";
 export const WS_ORDERS_URL = `${BASE_WS_URL}/orders`;
 export const WS_ALL_ORDERS_URL = `${BASE_WS_URL}/orders/all`;
+
+export const BASE_LOCALHOST = "http://localhost:5173";

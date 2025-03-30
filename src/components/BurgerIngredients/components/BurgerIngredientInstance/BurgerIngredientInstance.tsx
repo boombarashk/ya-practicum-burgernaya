@@ -11,11 +11,13 @@ import styles from "./BurgerIngredientInstance.module.css";
 type TBurgerIngredientInstanceProps = {
   ingredient: TIngredientFullInfo;
   onHandleClick: (_id: TIngredientFullInfo["_id"]) => void;
+  testId: string;
 };
 
 function BurgerIngredientInstance({
   ingredient,
   onHandleClick,
+  testId,
 }: TBurgerIngredientInstanceProps): React.JSX.Element {
   const { counters } = useSelector(constructorSelector);
 
@@ -34,7 +36,8 @@ function BurgerIngredientInstance({
   return (
     <div
       className={`${styles.detail} ${isDragging && styles.focus}`}
-      onClick={() => onHandleClick(ingredient._id)}>
+      onClick={() => onHandleClick(ingredient._id)}
+      data-testid={`constructor-item-ingredient-${testId}`}>
       {counters[ingredient._id] && (
         <Counter
           count={counters[ingredient._id]}

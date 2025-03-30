@@ -73,7 +73,11 @@ export default function DraggingConstructorElement({
   const opacity = isDragging ? 0 : 1;
 
   return (
-    <section ref={ingredientRef} className={styles.section} style={{ opacity }}>
+    <section
+      ref={ingredientRef}
+      className={styles.section}
+      style={{ opacity }}
+      data-testid={`draggable-${index}`}>
       <span className={styles.icon}>
         <DragIcon type="primary" />
       </span>

@@ -5,13 +5,13 @@ export type TCurrentIngredientState = {
   ingredient: TIngredientFullInfo | null;
 };
 
-const initialState: TCurrentIngredientState = {
+export const initialCurrentIngredientState: TCurrentIngredientState = {
   ingredient: null,
 };
 
 const currentIingredientSlice = createSlice({
   name: "currentIngredient",
-  initialState,
+  initialState: initialCurrentIngredientState,
   reducers: {
     resetCurrentIngredient(state) {
       state.ingredient = null;

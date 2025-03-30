@@ -25,6 +25,7 @@
 .container .inner {
   overflow-y: auto;
   height: calc(100vh - 480px);
+  /*min-height: 80px;*/
 }
 .container .inner .section + .section {
   margin-top: 16px;

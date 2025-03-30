@@ -5,7 +5,7 @@ type TCurrentOrderState = {
   data: TCard;
 };
 
-const initialState: TCurrentOrderState = {
+export const initialState: TCurrentOrderState = {
   data: {
     ingredients: [],
     orderId: null,

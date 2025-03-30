@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { RootState, useAppDispatch } from "../../store";
-import { TIngredientFullInfo } from "../../utils/types";
 import collectIngredients from "../../utils/collectIngredients";
 import findByParam from "../../utils/findByParam";
 import useScroll from "../../hooks/useScroll";
@@ -36,8 +35,6 @@ export default function HomePage(): React.JSX.Element {
 
   const { currentTab, onHandleScroll } = useScroll();
 
-  //const [showModal, setShowModal] = useState(false);
-
   const { data: ingredientsData, loading: loadingData } =
     useSelector(ingredientsSelector);
   const { data: constructorData, baseIngredient } =
@@ -54,18 +51,7 @@ export default function HomePage(): React.JSX.Element {
     checkState: currentIngredient,
     redirectUrl: `${location.href}ingredients/${currentIngredient?._id}`,
   });
-  /*
-  useEffect(() => {
-    if (showModal && currentIngredient) {
-      // browser location and history
-      history.pushState(
-        null,
-        "",
-        `${location.href}ingredients/${currentIngredient._id}`,
-      );
-    }
-  }, [showModal, currentIngredient]);
-*/
+
   const handleModalClose = () => {
     setShowModal(false);
     if (orderId || orderError) {

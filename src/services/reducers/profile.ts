@@ -91,7 +91,7 @@ export const patchUserDetails = createAsyncThunk<
   }),
 );
 
-const initialProfileState: TProfileState = {
+export const initialProfileState: TProfileState = {
   user: {},
   error: null,
   loading: false,

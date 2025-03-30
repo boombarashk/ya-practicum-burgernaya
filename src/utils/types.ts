@@ -20,7 +20,7 @@ export enum StatusOrderEnum {
   done = "выполнен",
   canceled = "отменен",
 }
-export type TStatusOrder = Partial<keyof StatusOrderEnum>;
+export type TStatusOrder = "done" | "canceled" | "created" | "pending";
 
 export enum InputTypeEnum {
   TEXT = "text",
