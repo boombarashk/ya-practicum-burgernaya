@@ -14,22 +14,23 @@ describe("Order is available", function () {
 
   it(`should correct DnD and create order`, function () {
     cy.getIngredients();
+    cy.get('[data-testid="constructor-droppable"]').as("droppable");
 
     cy.log("Добавление ингридиентов в конструкторе заказов");
     cy.drag(
       '[data-testid="constructor-item-ingredient-bun"] > img',
-      '[data-testid="constructor-droppable"]',
+      "@droppable",
     )
       .should("contain", "Краторная булка N-200i (верх)")
       .should("contain", "Краторная булка N-200i (низ)");
 
     cy.drag(
       '[data-testid="constructor-item-ingredient-main"]:nth-child(1) > img',
-      '[data-testid="constructor-droppable"]',
+      "@droppable",
     ).should("contain", "Биокотлета из марсианской Магнолии");
     cy.drag(
       '[data-testid="constructor-item-ingredient-main"]:nth-child(2) > img',
-      '[data-testid="constructor-droppable"]',
+      "@droppable",
     ).should("contain", "Сыр с астероидной плесенью");
 
     cy.get('[data-testid="button-order"]').should("be.enabled").click();

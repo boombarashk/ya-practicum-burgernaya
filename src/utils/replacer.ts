@@ -1,6 +1,5 @@
-const replacer = (location: string):string => {
-    return /#\/$/.test(location)
- ? location : `${location}#/`
-}
+const replacer = (location: string): string => {
+  return /#\/$/.test(location) ? location : `${location}#/`;
+};
 
-export default replacer
+export default replacer;

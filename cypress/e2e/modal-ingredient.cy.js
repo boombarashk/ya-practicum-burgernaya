@@ -15,7 +15,8 @@ describe("Correct ingredient details", function () {
     cy.get('[data-testid="constructor-item-ingredient-main"]').last().click();
 
     cy.log("Проверка отображенияи заголовков в модалке");
-    cy.get('[data-testid="modal"]')
+    cy.get('[data-testid="modal"]').as("modal");
+    cy.get("@modal")
       .should("be.visible")
       .then(($modal) => {
         cy.wrap($modal)
@@ -34,7 +35,7 @@ describe("Correct ingredient details", function () {
     cy.log("Закрытие модалки кликом на иконку");
     cy.get('[data-testid="modal"] > div').first().click();
 
-    cy.get('[data-testid="modal"]').should("not.exist");
+    cy.get("@modal").should("not.exist");
   });
 
   it("should open details by id ingredient", () => {
