@@ -24,7 +24,9 @@ describe("Correct ingredient details", function () {
       });
 
     cy.location().should((location) => {
-      expect(location.pathname).to.eq("/ingredients/643d69a5c3f7b9001cfa094a");
+      expect(location.href).to.match(
+        /\/#\/ingredients\/643d69a5c3f7b9001cfa094a$/,
+      );
     });
 
     cy.get('[data-testid="modal-overlay"]').should("be.exist");
@@ -36,7 +38,9 @@ describe("Correct ingredient details", function () {
   });
 
   it("should open details by id ingredient", () => {
-    cy.getIngredients(`${BASE_LOCALHOST}/ingredients/643d69a5c3f7b9001cfa094a`);
+    cy.getIngredients(
+      `${BASE_LOCALHOST}/#/ingredients/643d69a5c3f7b9001cfa094a`,
+    );
 
     cy.get("h1").contains("Детали ингридиента");
     cy.contains("Сыр с астероидной плесенью");

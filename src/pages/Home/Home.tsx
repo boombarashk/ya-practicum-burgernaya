@@ -26,6 +26,7 @@ import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredie
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import { STORAGE_TOKEN } from "../../consts";
+import replacer from "../../utils/replacer";
 import useModal from "../../hooks/useModal";
 import styles from "./Home.module.css";
 
@@ -49,7 +50,7 @@ export default function HomePage(): React.JSX.Element {
 
   const { showModal, setShowModal } = useModal({
     checkState: currentIngredient,
-    redirectUrl: `${location.href}ingredients/${currentIngredient?._id}`,
+    redirectUrl: `${replacer(location.href)}ingredients/${currentIngredient?._id}`,
   });
 
   const handleModalClose = () => {

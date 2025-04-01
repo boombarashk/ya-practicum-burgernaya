@@ -69,7 +69,7 @@ export default function FeedPage(): React.JSX.Element {
 
   const { showModal, setShowModal } = useModal({
     checkState: orderId,
-    redirectUrl: `/feed/${orderId}`,
+    redirectUrl: `#/feed/${orderId}`,
   });
 
   const handleModalClose = () => {

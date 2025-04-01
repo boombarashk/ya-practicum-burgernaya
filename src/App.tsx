@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/Home/Home";
 import LoginPage from "./pages/Login/Login";
@@ -29,7 +29,7 @@ function App(): React.JSX.Element {
   }, [ingredientsData]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<HomePage />} />
@@ -77,7 +77,7 @@ function App(): React.JSX.Element {
         </Route>
         <Route path="*" element={<NotFound404Page />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

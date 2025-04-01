@@ -36,7 +36,7 @@ describe("Order is available", function () {
 
     cy.log("Авторизация при заказе");
     cy.location().should((location) => {
-      expect(location.pathname).to.eq("/login");
+      expect(location.href).to.match(/login$/);
     });
 
     cy.get("input[name=email]").type("1@test.com");
