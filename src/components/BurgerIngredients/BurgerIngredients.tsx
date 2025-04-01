@@ -37,7 +37,9 @@ function BurgerIngredients({
     <div className={`custom-scroll ${styles.inner}`} onScroll={onHandleScroll}>
       {TYPE_INGREDIENT.map(({ title, param }) => {
         return (
-          <section key={`section-${param}`}>
+          <section
+            key={`section-${param}`}
+            data-testid={`constructor-list-${param}`}>
             <h2 className={styles[param]} data-ref={param}>
               {title}
             </h2>
@@ -49,6 +51,7 @@ function BurgerIngredients({
                     key={ingredient._id}
                     ingredient={ingredient}
                     onHandleClick={onHandleClick}
+                    testId={param}
                   />
                 );
               })}

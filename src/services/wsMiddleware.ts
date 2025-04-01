@@ -64,7 +64,6 @@ export const wsMiddleware =
 
           try {
             const parsedData = JSON.parse(data);
-            // console.log(parsedData);
 
             if (
               withTokenRefresh &&
@@ -83,8 +82,6 @@ export const wsMiddleware =
                 .catch((err: Error) => {
                   dispatch(onError(err.message));
                 });
-              //     dispatch(disconnect());
-              //     return;
             }
 
             dispatch(

@@ -22,14 +22,14 @@ export const fetchIngredients = createAsyncThunk<
     ),
 );
 
-const initialState: TIngredientsState = {
+export const initialIngredientsState: TIngredientsState = {
   loading: false,
   data: [],
 };
 
 const ingredientsSlice = createSlice({
   name: "ingredients",
-  initialState,
+  initialState: initialIngredientsState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchIngredients.rejected, (state) => {

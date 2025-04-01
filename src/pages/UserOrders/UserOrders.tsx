@@ -40,7 +40,7 @@ export default function UserOrdersPage(): React.JSX.Element {
 
   const { showModal, setShowModal } = useModal({
     checkState: orderId,
-    redirectUrl: `/profile/orders/${orderId}`,
+    redirectUrl: `#/profile/orders/${orderId}`,
   });
   const handleModalClose = () => {
     setShowModal(false);

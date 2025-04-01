@@ -11,7 +11,11 @@ export default function ModalOverlay({
   onHandleClick,
 }: TModalOverlayProps): React.JSX.Element {
   return (
-    <div className={styles.overlay} id="modal-overlay" onClick={onHandleClick}>
+    <div
+      className={styles.overlay}
+      id="modal-overlay"
+      onClick={onHandleClick}
+      data-testid="modal-overlay">
       {children}
     </div>
   );

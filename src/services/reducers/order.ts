@@ -32,7 +32,7 @@ export const fetchOrder = createAsyncThunk<
   }
 });
 
-const inititalOrderState: TOrderState = {
+export const inititalOrderState: TOrderState = {
   orderId: null,
   name: "",
   error: null,

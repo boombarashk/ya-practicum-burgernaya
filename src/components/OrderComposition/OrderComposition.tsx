@@ -12,14 +12,7 @@ import Price from "../Price/Price";
 import IngredientPreview from "../IngredientPreview/IngredientPreview";
 
 import styles from "./OrderComposition.module.css";
-/**OrderComposition.tsx:67 Warning: Each child in a list should have a unique "key" prop.
 
-Check the render method of `OrderComposition`. See https://reactjs.org/link/warning-keys for more information.
-    at li
-    at OrderComposition (http://localhost:5173/src/components/OrderComposition/OrderComposition.tsx?t=1742512078736:29:3)
-    at div
-    at div
-    at OrderPage (s */
 type TOrderDetailsProps = {
   orderId: string;
   burgerName: string;
@@ -69,7 +62,7 @@ export default function OrderComposition({
 
       <div
         className={`text text_type_main-default ${String(status) === "done" ? styles.success : ""}`}>
-        {StatusOrderEnum[status]}
+        {StatusOrderEnum[status as TStatusOrder]}
       </div>
 
       <p className={styles.subtitle}>Состав:</p>

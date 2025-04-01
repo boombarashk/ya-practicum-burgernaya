@@ -34,7 +34,10 @@ export default function Modal({
 
   return createPortal(
     <ModalOverlay onHandleClick={onHandleClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.modal}
+        onClick={(e) => e.stopPropagation()}
+        data-testid="modal">
         <div className={styles.close}>
           <CloseIcon type="primary" onClick={onHandleClose} />
         </div>

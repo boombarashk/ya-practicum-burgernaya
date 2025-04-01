@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import cryptoRandomString from "crypto-random-string";
+import { v4 as uuidv4 } from "uuid";
 import {
   IngredientTypeEnum,
   TIngredient,
@@ -27,7 +27,7 @@ const diffPrice = (price: number, isBase = false): number => {
   return price;
 };
 
-const initialConstructorState: TConstructorState = {
+export const initialConstructorState: TConstructorState = {
   data: [],
   baseIngredient: null,
   finalPrice: 0,
@@ -62,10 +62,7 @@ const constructorSlice = createSlice({
       } else {
         state.data.push({
           ...reduceInfo(action.payload),
-          id: cryptoRandomString({
-            length: 8,
-            type: "base64",
-          }),
+          id: uuidv4(),
         });
 
         state.finalPrice += diffPrice(action.payload.price);

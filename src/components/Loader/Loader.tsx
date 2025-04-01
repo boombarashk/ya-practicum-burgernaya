@@ -8,7 +8,9 @@ type TLoaderProps = {
 
 export default function Loader({ isIcon }: TLoaderProps): React.JSX.Element {
   return (
-    <div className={`${styles.loader} ${isIcon && styles.icon}`}>
+    <div
+      className={`${styles.loader} ${isIcon && styles.icon}`}
+      data-testid="loader">
       <img src={loader} alt="Загрузка.." />
     </div>
   );

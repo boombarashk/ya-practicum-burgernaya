@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
-  CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TIngredient } from "../../utils/types";
@@ -43,7 +42,10 @@ export default function BurgerConstructor({
   });
 
   return (
-    <div ref={dropRef} className={styles.container}>
+    <div
+      ref={dropRef}
+      className={styles.container}
+      data-testid="constructor-droppable">
       {baseIngredient && (
         <section className={styles.section}>
           <span className={`empty ${styles.icon}`}></span>
@@ -85,11 +87,8 @@ export default function BurgerConstructor({
       {finalPrice > 0 && baseIngredient && (
         <footer className={styles.footer}>
           <Price customClassName={styles.info} value={finalPrice} />
-          {/*<div className={styles.info}>
-            <p className="text text_type_digits-medium">{finalPrice}</p>
-            <CurrencyIcon type="primary" />
-          </div>*/}
           <Button
+            data-testid="button-order"
             htmlType="button"
             type="primary"
             size="medium"
